@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Load the Paper.js library -->
+<script type="text/javascript" src="../node_modules/paper/dist/paper-full.min.js"></script>
+<!-- Define inlined PaperScript associate it with myCanvas -->
+<script type="text/javascript" src="./interact.js"></script>
+<script type="text/javascript" src="./out.js"></script>
+<style type="text/css">
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        overflow: scroll;
+    }
+    
+    /* Scale canvas with resize attribute to full size */
+    canvas[resize] {
+        width: 1200px;
+        height: 800px;
+        overflow: auto;
+        display: block;
+    }
+    </style>
+<script type="text/javascript">
+    paper.install(window);
+    
+    var onFrameListeners = [];
+    var onMouseMoveListeners = [];
+
+    var text;
+
+	window.onload = function() {
+		paper.setup('myCanvas');
+
+        view.onFrame = function() {
+            onFrameListeners.forEach((listener) => listener.onFrame());
+        }
+
+        var tool = new Tool();
+        tool.minDistance = 0;
+        tool.maxDistance = 1;
+        tool.onMouseMove = function(event) {
+            onMouseMoveListeners.forEach((listener) => listener.onMouseMove(event));
+        };
+
+        initMap();
+
+        var pulsingColors = new PulsingColors(0.05);
+        onFrameListeners.push(pulsingColors);
+	}
+</script>
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>

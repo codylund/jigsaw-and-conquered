@@ -1,0 +1,1 @@
+Contains 110m geographic data of countries around the world. See https://github.com/AshKyd/geojson-regions for details.
